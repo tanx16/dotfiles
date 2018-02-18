@@ -8,7 +8,8 @@ set cursorline
 
 set background=dark
 let g:gruvbox_termcolors=256
-let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_dark='dark'
+let g:gruvbox_hls_cursor='blue'
 colorscheme gruvbox
 
 set expandtab
