@@ -1,19 +1,40 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
+import subprocess
 import os
 
 parser = argparse.ArgumentParser(description='Delete git branches on local and remote')
-parser.add_argument('branch_name', help='Remove selected branch')
+parser.add_argument('-b', '--branch', help='Remove selected branch')
 parser.add_argument('-f', help='Force deletion', action='store_true')
 parser.add_argument('-r', '--remote', help='Specify remote branch', default='origin')
 args = parser.parse_args()
 
-delete_remote_command = 'git push --delete {} {}'.format(args.remote, args.branch_name)
-delete_local_command = 'git branch -d {}'.format(args.branch_name)
-
 if args.f:
-    delete_local_command = 'git branch -D {}'.format(args.branch_name)
+    delete_local_command = 'git branch -D {}'.format(args.branch)
 
+if not args.branch:
+    results = subprocess.check_output(['git', 'branch']).splitlines()
+    results = [result.decode("utf-8") for result in results]
+    results = [result.strip() for result in results if 'master' not in result]
+    print('Please select branch for deletion.')
+    for i in range(len(results)):
+        print('{} - {}'.format(i, results[i]))
+    selected = int(input())
+    if selected >= 0 and selected < len(results):
+        args.branch = results[selected]
+    else:
+        print("Selected branch out of range. Exiting.")
+        exit()
+    cont = input("Delete \'{}\'? Y/N\n".format(args.branch))
+    if cont.lower() != 'y':
+        exit()
+
+delete_remote_command = 'git push --delete {} {}'.format(args.remote, args.branch)
+delete_local_command = 'git branch -d {}'.format(args.branch)
+
+print('Deleting remote branch {}.'.format(args.branch))
 os.system(delete_remote_command)
 os.system(delete_local_command)
+print('Deleted local branch {}. Exiting.'.format(args.branch))
+exit()
