@@ -33,7 +33,7 @@ set shiftwidth=4
 set autoindent
 set cindent
 
-" Better search 
+" Better search
 set incsearch
 
 " Allow folding
@@ -48,3 +48,81 @@ set wildmenu
 set wildmode=list:longest,full
 set wildignore+=**/virtualenv_run/**,*.pyc,*.pyo,__pycache__
 set path=$PWD/**
+
+" Better tags (This requires Exuberant Ctags)
+set tag=./tags;
+let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
+let g:gutentags_ctags_exclude = [
+      \ '*.svg',
+      \ '*/tests/*',
+      \ 'build',
+      \ 'dist',
+      \ '*sites/*/files/*',
+      \ 'bin',
+      \ 'node_modules',
+      \ 'bower_components',
+      \ 'cache',
+      \ 'compiled',
+      \ 'docs',
+      \ 'example',
+      \ 'bundle',
+      \ 'vendor',
+      \ '*.md',
+      \ '*-lock.json',
+      \ '*.lock',
+      \ '*bundle*.js',
+      \ '*build*.js',
+      \ '.*rc*',
+      \ '*.json',
+      \ '*.min.*',
+      \ '*.map',
+      \ '*.bak',
+      \ '*.zip',
+      \ '*.pyc',
+      \ '*.class',
+      \ '*.sln',
+      \ '*.Master',
+      \ '*.csproj',
+      \ '*.tmp',
+      \ '*.csproj.user',
+      \ '*.cache',
+      \ '*.pdb',
+      \ 'tags*',
+      \ 'cscope.*',
+      \ '*.css',
+      \ '*.less',
+      \ '*.scss',
+      \ '*.exe', '*.dll',
+      \ '*.mp3', '*.ogg', '*.flac',
+      \ '*.swp', '*.swo',
+      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+      \ ]
+
+" ---- Functions ----
+
+" Magically copy yank buffer to system clipboard with Osc52
+function! Osc52Yank()
+  let buffer=system('base64 -w0', @0)
+  let buffer=substitute(buffer, "\n$", "", "")
+  let buffer='\e]52;c;'.buffer.'\x07'
+  if $TMUX != ''
+    let buffer='\ePtmux;\e'.buffer.'\e\\'
+  endif
+  silent exe "!echo -ne ".shellescape(buffer)." > ".shellescape("/dev/tty")
+endfunction
+command! Osc52CopyYank call Osc52Yank()
+nnoremap <leader>y :Osc52CopyYank<cr>:redr!<cr>
+
+" Make vim automatically set paste/nopaste when pasting stuff
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
