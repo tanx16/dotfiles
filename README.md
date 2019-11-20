@@ -8,6 +8,7 @@ Run `uninstall.sh` to remove the vim plugins and to revert the dotfiles to backu
 * NERDTree (File explorer)
 * gruvbox (Colorscheme)
 * vim-airline (Status bar)
+* Vim-Gutentags (Ctags)
 
 ## tmux settings:
 * Set prefix to C-a
@@ -15,3 +16,6 @@ Run `uninstall.sh` to remove the vim plugins and to revert the dotfiles to backu
 * Select panes using C-a(hjkl)
 * Resize panes using M-(hjlk)
 * Shift-arrow to switch windows
+
+## Dependencies:
+* Exuberant Ctags
