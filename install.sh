@@ -16,4 +16,5 @@ git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
 git clone https://github.com/ludovicchabant/vim-gutentags.git ~/.vim/bundle/vim-gutentags
 
 # Installs scripts and makes them runnable
+mkdir -p ~/bin/
 chmod u+x scripts/cleanup && cp scripts/cleanup ~/bin/
