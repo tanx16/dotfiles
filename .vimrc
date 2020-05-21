@@ -51,6 +51,9 @@ set path=$PWD/**
 
 " Better tags (This requires Exuberant Ctags)
 set tag=./tags;
+if !executable('ctags')
+    let g:gutentags_dont_load = 1
+endif
 let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
 let g:gutentags_ctags_exclude = [
       \ '*.svg',
