@@ -49,6 +49,12 @@ set wildmode=list:longest,full
 set wildignore+=**/virtualenv_run/**,*.pyc,*.pyo,__pycache__
 set path=$PWD/**
 
+" Allow moving by wrapping
+:noremap <Up> gk
+:noremap! <Up> <C-O>gk
+:noremap <Down> gj
+:noremap! <Down> <C-O>gj
+
 " Better tags (This requires Exuberant Ctags)
 set tag=./tags;
 if !executable('ctags')
