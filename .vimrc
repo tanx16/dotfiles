@@ -112,6 +112,7 @@ let g:gutentags_ctags_exclude = [
 " ---- Functions ----
 
 " Magically copy yank buffer to system clipboard with Osc52
+" Only works in iTerm2 - make sure to enable clipboard access
 function! Osc52Yank()
   let buffer=system('base64 -w0', @0)
   let buffer=substitute(buffer, "\n$", "", "")
