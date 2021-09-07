@@ -3,6 +3,8 @@ execute pathogen#infect()
 syntax enable
 filetype plugin indent on
 
+let g:syntastic_python_checkers = ['flake8']
+
 " Line number improvements
 set number
 set rnu
@@ -20,6 +22,7 @@ let g:netrw_liststyle = 3
 
 " Colorscheme settings
 set background=dark
+set t_Co=256
 let g:gruvbox_termcolors=256
 let g:gruvbox_contrast_dark='dark'
 let g:gruvbox_hls_cursor='blue'
@@ -48,6 +51,7 @@ set wildmenu
 set wildmode=list:longest,full
 set wildignore+=**/virtualenv_run/**,*.pyc,*.pyo,__pycache__
 set path=$PWD/**
+setglobal complete-=i " No indexing of massive files for ctrl-n/p
 
 " Allow moving by wrapping
 :noremap <Up> gk
@@ -57,6 +61,10 @@ set path=$PWD/**
 
 " Better tags (This requires Exuberant Ctags)
 set tag=./tags;
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
 if !executable('ctags')
     let g:gutentags_dont_load = 1
 endif
