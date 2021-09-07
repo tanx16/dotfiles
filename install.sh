@@ -14,6 +14,7 @@ git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
 git clone https://github.com/morhetz/gruvbox.git ~/.vim/bundle/gruvbox
 git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
 git clone https://github.com/ludovicchabant/vim-gutentags.git ~/.vim/bundle/vim-gutentags
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Installs scripts and makes them runnable
 mkdir -p ~/bin/
